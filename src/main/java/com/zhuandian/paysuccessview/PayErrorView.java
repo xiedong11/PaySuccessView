@@ -116,7 +116,6 @@ public class PayErrorView extends View implements ValueAnimator.AnimatorUpdateLi
             v2 = (float) animation.getAnimatedValue();
             invalidate();
             if (v2 == 1) {
-                v2 = 0;
                 valueAnimator3.start();
             }
         } else if (animation.equals(valueAnimator3)) {
