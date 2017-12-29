@@ -27,7 +27,7 @@ public class PathMeasureView extends View {
         mPath = new Path();
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(Color.parseColor("#f90876"));
-        mPaint.setStrokeWidth(5);
+        mPaint.setStrokeWidth(10);
         mPaint.setStyle(Paint.Style.STROKE);
 
         // 创建从0 到1的动画
@@ -41,7 +41,7 @@ public class PathMeasureView extends View {
             }
         });
         valueAnimator.setRepeatCount(ValueAnimator.INFINITE);
-        valueAnimator.setDuration(2000);
+        valueAnimator.setDuration(1500);
         valueAnimator.start();
     }
 
@@ -56,7 +56,7 @@ public class PathMeasureView extends View {
         int width = getWidth();
         int height = getHeight();
         // 绘制的图形为圆形
-        mPath.addCircle(width / 2, height / 2, 50, Path.Direction.CW);
+        mPath.addCircle(width / 2, height / 2, 60, Path.Direction.CW);  //Path.Direction.CCW  逆时针，  CW顺时针
         // 将mPath和mPathMeasure关联起来
         mPathMeasure.setPath(mPath, true);
         mLength = mPathMeasure.getLength();

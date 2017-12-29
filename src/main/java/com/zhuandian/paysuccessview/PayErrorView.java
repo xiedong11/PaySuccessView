@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -71,9 +72,12 @@ public class PayErrorView extends View implements ValueAnimator.AnimatorUpdateLi
     }
 
     public void animatorStart() {
+        //重复执行时全局变量v2的值会影响重绘，这里手动将v2赋值0
+        v2 = 0;
         initPaint();
         initPath();
     }
+
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -92,12 +96,12 @@ public class PayErrorView extends View implements ValueAnimator.AnimatorUpdateLi
             mPathMeasure.getSegment(0, v2 * mPathMeasure.getLength(), dst2, true);
             canvas.drawPath(dst2, mPaint);
         }
-//        if (v2 == 1) {
-//            mPathMeasure.nextContour();
-//            mPathMeasure.setPath(mPath3, false);
-//            mPathMeasure.getSegment(0, v3 * mPathMeasure.getLength(), dst3, true);
-//            canvas.drawPath(dst3, mPaint);
-//        }
+        if (v2 == 1) {
+            mPathMeasure.nextContour();
+            mPathMeasure.setPath(mPath3, false);
+            mPathMeasure.getSegment(0, v3 * mPathMeasure.getLength(), dst3, true);
+            canvas.drawPath(dst3, mPaint);
+        }
     }
 
     @Override
@@ -112,11 +116,14 @@ public class PayErrorView extends View implements ValueAnimator.AnimatorUpdateLi
             v2 = (float) animation.getAnimatedValue();
             invalidate();
             if (v2 == 1) {
+                v2 = 0;
                 valueAnimator3.start();
             }
         } else if (animation.equals(valueAnimator3)) {
             v3 = (float) animation.getAnimatedValue();
             invalidate();
         }
+
+
     }
 }
